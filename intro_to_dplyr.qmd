@@ -11,3 +11,11 @@ here::i_am("dplyr-101.Rproj")
 library(here)
 ```
 
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+data("diamonds")
+```
