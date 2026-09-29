@@ -1,0 +1,13 @@
+---
+title: "Introduction to dplyr"
+author: "Fabrice Rossi"
+format: 
+  revealjs:
+    echo: false
+---
+
+```{r}
+here::i_am("dplyr-101.Rproj")
+library(here)
+```
+
