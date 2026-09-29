@@ -19,3 +19,11 @@ library(dplyr)
 ```{r}
 data("diamonds")
 ```
+
+## Link between diamond carat and price
+
+```{r}
+ggplot(diamonds, aes(x=carat, y=price)) +
+  geom_point()
+```
+
