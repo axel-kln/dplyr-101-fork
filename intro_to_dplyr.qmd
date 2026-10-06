@@ -25,7 +25,7 @@ data("diamonds")
 ## Link between diamond carat and price
 
 ```{r}
-ggplot(diamonds, aes(x=carat, y=price)) +
+ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point()
 ```
 
@@ -34,11 +34,11 @@ ggplot(diamonds, aes(x=carat, y=price)) +
 ```{r}
 #| echo: true
 diamonds_2ct <- diamonds |>
-  filter( abs(carat - 2) < 0.1)
+  filter(abs(carat - 2) < 0.1)
 ```
 
 ```{r}
-ggplot(diamonds_2ct, aes(x=carat, y=price)) +
+ggplot(diamonds_2ct, aes(x = carat, y = price)) +
   geom_point()
 ```
 
@@ -47,7 +47,7 @@ ggplot(diamonds_2ct, aes(x=carat, y=price)) +
 ```{r}
 diamonds |>
   filter(carat >= 2, carat <= 2.1) |>
-  ggplot(aes(x=carat,y=price, group=carat)) +
+  ggplot(aes(x = carat, y = price, group = carat)) +
   geom_boxplot()
 ```
 
@@ -56,6 +56,6 @@ diamonds |>
 ```{r}
 diamonds |>
   filter(carat >= 2, carat <= 2.1) |>
-  ggplot(aes(x=carat,y=price, group=carat)) +
+  ggplot(aes(x = carat, y = price, group = carat)) +
   geom_violin()
 ```
