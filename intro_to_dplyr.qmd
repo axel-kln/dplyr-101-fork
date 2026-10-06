@@ -316,25 +316,60 @@ diamonds |>
 
 ::::: columns
 ::: {.column width="50%"}
-
 ```{r}
 #| echo: true
 diamonds |> 
   summarise(count = n(), 
             .by = cut)
 ```
-
 :::
 
 ::: {.column width="50%"}
-
 ```{r}
 #| echo: true
 diamonds |> 
   group_by(cut) |> 
   summarise(count = n())
 ```
-
 :::
 :::::
 
+## Dependencies
+
+A standard way to assess dependency between two numerical variables is Pearson's correlation coefficient: `cor`.
+
+::::: columns
+::: {.column width="50%"}
+
+```{r}
+diamonds |>
+  summarise(cor(carat, price))
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+diamonds |>
+  summarise(cor(carat, price), .by=cut)
+```
+:::
+:::::
+
+
+
+
+## Dependencies (non numerical) {.smaller}
+
+```{r}
+diamonds |>
+  ggplot(aes(x=cut, fill=color)) +
+  geom_bar(position="stack")
+```
+
+## Dependencies (non numerical)
+
+```{r}
+diamonds |>
+  summarise(n(), .by=c(cut, color)) |>
+  slice(1:5) ## first five rows
+```
