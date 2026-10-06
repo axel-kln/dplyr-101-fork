@@ -22,6 +22,8 @@ library(dplyr)
 data("diamonds")
 ```
 
+# Introduction to `filter`
+
 ## Link between diamond carat and price
 
 ```{r}
