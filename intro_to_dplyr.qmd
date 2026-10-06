@@ -291,6 +291,27 @@ diamonds |>
   summarise(median_price = median(price))
 ```
 
+## Graphical investigation
+
+```{r}
+ggplot(diamonds, aes(x=price, colour = cut)) +
+  geom_density(bw="sj", linewidth = 1, alpha = 0.75)
+```
+
+## Additional statistics
+
+Statistics summarising the price distribution given the cut.
+
+```{r}
+diamonds |>
+  summarise(median = median(price), 
+            mean = mean(price),
+            sd = sd(price),
+            IQR = IQR(price),
+            .by = cut) |>
+  arrange(cut)
+```
+
 ## Counting stuff
 
 ::::: columns
