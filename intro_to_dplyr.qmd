@@ -156,6 +156,7 @@ TRUE | FALSE
 ## Examples
 
 Two equivalent filter operations:
+
 ```{r}
 #| echo: true
 #| eval: false
@@ -164,9 +165,102 @@ diamonds |> filter( (price == 1000) & (cut == "Ideal") )
 ```
 
 Two different filter operations:
+
 ```{r}
 #| echo: true
 #| eval: false
 diamonds |> filter(price == 1000, cut == "Ideal") 
 diamonds |> filter( (price == 1000) | (cut == "Ideal") ) 
 ```
+
+# Introduction to `summarise`
+
+## Global summaries
+
+```{r}
+#| echo: true
+diamonds |> 
+  summarise(mean(price), median(price))
+```
+
+`summarise` is used as follows:
+
+```{r}
+#| eval: false
+#| echo: true
+summarise(dataframe, expression based on an aggregation function)
+```
+
+The result is a data frame with one column per expression and one row.
+
+## Aggregation functions {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+
+An aggregation function computes a statistics (in a broad sense) on a 
+numerical vector, for instance
+
+- `mean`
+- `median`
+- `sd`: standard deviation
+- `var`: variance
+- `max` and `min`
+
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+x <- c(-0.1, 1, 2, 2, -3, 5)
+mean(x)
+median(x)
+sd(x)
+min(x)
+n_distinct(x)
+length(x)
+```
+
+:::
+:::::
+
+## Limitations of `summarise` {.smaller}
+
+Aggregation functions are mostly limited to numerical values (and to logical ones 
+to some extent). Aggregation functions for non numerical vectors generally output
+multiple values.
+
+```{r}
+#| echo: true
+y <- c("A", "A", "B", "C", "A", "B", "C", "C", "D")
+table(y)
+```
+
+```{r}
+#| echo: true
+diamonds |> 
+  pull(cut) |>
+  table()
+```
+
+This generates an error because the aggregation contains multiple values. 
+
+```{r}
+#| echo: true
+#| eval: false
+diamonds |>
+  summarise(table(cut))
+```
+
+## Renaming the resulting columns
+
+```{r}
+#| echo: true
+diamonds |> 
+  summarise(mean_price = mean(price), 
+            median_price = median(price), 
+            interquartile_price = IQR(price))
+```
+In many dplyr verbs, one can give to an expression a name in the form 
+`name=expression`. The name will be used for the corresponding column.
+
