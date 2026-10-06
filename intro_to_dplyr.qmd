@@ -6,6 +6,7 @@ format:
     echo: false
   pptx:
     echo: false
+lightbox: true
 ---
 
 ```{r}
