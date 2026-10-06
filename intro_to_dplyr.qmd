@@ -197,16 +197,13 @@ The result is a data frame with one column per expression and one row.
 
 ::::: columns
 ::: {.column width="50%"}
-
-An aggregation function computes a statistics (in a broad sense) on a 
-numerical vector, for instance
+An aggregation function computes a statistics (in a broad sense) on a numerical vector, for instance
 
 - `mean`
 - `median`
 - `sd`: standard deviation
 - `var`: variance
 - `max` and `min`
-
 :::
 
 ::: {.column width="50%"}
@@ -220,15 +217,12 @@ min(x)
 n_distinct(x)
 length(x)
 ```
-
 :::
 :::::
 
 ## Limitations of `summarise` {.smaller}
 
-Aggregation functions are mostly limited to numerical values (and to logical ones 
-to some extent). Aggregation functions for non numerical vectors generally output
-multiple values.
+Aggregation functions are mostly limited to numerical values (and to logical ones to some extent). Aggregation functions for non numerical vectors generally output multiple values.
 
 ```{r}
 #| echo: true
@@ -243,7 +237,7 @@ diamonds |>
   table()
 ```
 
-This generates an error because the aggregation contains multiple values. 
+This generates an error because the aggregation contains multiple values.
 
 ```{r}
 #| echo: true
@@ -261,6 +255,65 @@ diamonds |>
             median_price = median(price), 
             interquartile_price = IQR(price))
 ```
-In many dplyr verbs, one can give to an expression a name in the form 
-`name=expression`. The name will be used for the corresponding column.
+
+In many dplyr verbs, one can give to an expression a name in the form `name=expression`. The name will be used for the corresponding column.
+
+# Grouped operations
+
+## Grouped summaries {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+```{r}
+#| echo: true
+diamonds |>
+  summarise(median_price = median(price), 
+            .by = cut)
+```
+:::
+
+::: {.column width="50%"}
+Effects of `.by`
+
+1)  split the data frame into as many sub-data frames as values taken by the `.by` variable
+2)  apply the aggregation functions to each sub-data frame
+3)  glue together the resulting one row data frames
+4)  add a column to identify the subsets
+:::
+:::::
+
+## Manual calculation for one value
+
+```{r}
+#| echo: true
+diamonds |>
+  filter(cut == "Ideal") |>
+  summarise(median_price = median(price))
+```
+
+## Counting stuff
+
+::::: columns
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+diamonds |> 
+  summarise(count = n(), 
+            .by = cut)
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+diamonds |> 
+  group_by(cut) |> 
+  summarise(count = n())
+```
+
+:::
+:::::
 
