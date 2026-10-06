@@ -56,13 +56,10 @@ nb_diamonds_below_2 <- diamonds_2ct |>
 
 There are:
 
--  `r nb_diamonds_below_2` diamonds with weight between 1.9 and 1.99 carats
--  `r nb_diamonds_near_2-nb_diamonds_below_2` diamonds with weight between 2 and
-   2.1 carats
+- `r nb_diamonds_below_2` diamonds with weight between 1.9 and 1.99 carats
+- `r nb_diamonds_near_2-nb_diamonds_below_2` diamonds with weight between 2 and 2.1 carats
 
-There is a clear gap in the distribution of the weights, with a very small number
-of diamonds just before 2 carats compared to the number of them just after 2 carats.
-
+There is a clear gap in the distribution of the weights, with a very small number of diamonds just before 2 carats compared to the number of them just after 2 carats.
 
 ## Prices of 2 carat diamonds
 
