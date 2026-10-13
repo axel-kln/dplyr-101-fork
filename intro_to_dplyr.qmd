@@ -642,3 +642,25 @@ diamonds |>
   slice_sample(n=5) |>
   select(where(is.factor))
 ```
+
+## Combination of selections
+
+Selection formulae can be combined using the standard logical operators 
+`|`, `&` and `!`.
+
+```{r}
+#| echo: true
+diamonds |>
+  slice_sample(n=5) |>
+  select(price | where(is.factor))
+```
+
+## Combination of selections
+
+```{r}
+#| echo: true
+diamonds |>
+  slice_sample(n=5) |>
+  select(!starts_with("c"))
+```
+
