@@ -19,6 +19,7 @@ library(here)
 library(ggplot2)
 theme_set(theme_bw())
 library(dplyr)
+library(vroom)
 ```
 
 ```{r}
@@ -560,3 +561,7 @@ diamonds |>
   slice_sample(by=cut, weight_by = price/carat)
 ```
 
+```{r}
+#| message: false
+credit_default <- vroom(here("data", "default-of-credit-card-clients.csv"))
+```
