@@ -340,7 +340,6 @@ A standard way to assess dependency between two numerical variables is Pearson's
 
 ::::: columns
 ::: {.column width="50%"}
-
 ```{r}
 diamonds |>
   summarise(cor(carat, price))
@@ -354,9 +353,6 @@ diamonds |>
 ```
 :::
 :::::
-
-
-
 
 ## Dependencies (non numerical) {.smaller}
 
@@ -378,15 +374,13 @@ diamonds |>
 
 ## Introduction to `mutate`
 
-The `mutate` verb is used to create new columns (or to modify existing ones)
-based on calculation conducted on existing columns. Generic form:
+The `mutate` verb is used to create new columns (or to modify existing ones) based on calculation conducted on existing columns. Generic form:
 
 ```{r}
 #| echo: true
 #| eval: false
 mutate(dataframe, newcolumn = expression)
 ```
-
 
 ```{r}
 #| echo: true
@@ -424,7 +418,7 @@ diamonds_ppc |>
 
 ## Global extreme diamonds
 
-We want to study "extreme diamonds" in terms of price per carat. 
+We want to study "extreme diamonds" in terms of price per carat.
 
 ```{r}
 diamonds_ppc |>
@@ -435,7 +429,7 @@ diamonds_ppc |>
 
 ## Global extreme diamonds (graphics)
 
-This selects diamonds with a price (per carat) larger than the average one + 2 times its standard deviation. 
+This selects diamonds with a price (per carat) larger than the average one + 2 times its standard deviation.
 
 ```{r}
 diamonds_ppc |>
@@ -453,7 +447,7 @@ diamonds_with_stats <-
            large_ppc = mean + 2*sd)
 ```
 
-## Conditional analysis. 
+## Conditional analysis.
 
 ```{r}
 diamonds_with_cond_stats <- 
@@ -471,3 +465,43 @@ diamonds_with_cond_stats |>
   geom_density(bw="sj", linewidth = 1, alpha = 0.75) +
   geom_rug(alpha = 0.5)
 ```
+
+# Application to discrete data
+
+## Visual conditional distributions
+
+```{r}
+diamonds |>
+  ggplot(aes(x=cut, fill=color)) +
+  geom_bar(position="fill")
+```
+
+## Conditional frequencies {.smaller}
+
+
+::::: columns
+::: {.column width="40%"}
+```{r}
+#| echo: true
+diamonds_counts <- 
+  diamonds |>
+    summarise(n(), 
+              .by=c(cut, color)) 
+```
+
+```{r}
+#| echo: true
+diamonds_cond_counts <-
+  diamonds_counts |> 
+  mutate(freq = `n()`/sum(`n()`), 
+         .by=cut)
+```
+:::
+
+::: {.column width="60%"}
+```{r}
+diamonds_cond_counts |>
+  slice(1:5)
+```
+:::
+:::::
