@@ -410,3 +410,64 @@ diamonds_ppc |>
   geom_density(bw="sj", linewidth = 1, alpha = 0.75)
 ```
 
+## Grouped mutate
+
+```{r}
+diamonds_ppc |>
+  summarise(median = median(`price per carat`), 
+            mean = mean(`price per carat`),
+            sd = sd(`price per carat`),
+            IQR = IQR(`price per carat`),
+            .by = cut) |>
+  arrange(cut)
+```
+
+## Global extreme diamonds
+
+We want to study "extreme diamonds" in terms of price per carat. 
+
+```{r}
+diamonds_ppc |>
+  filter(`price per carat` > 10000) |>
+  slice(1:5) |>
+  select(1:6)
+```
+
+## Global extreme diamonds (graphics)
+
+This selects diamonds with a price (per carat) larger than the average one + 2 times its standard deviation. 
+
+```{r}
+diamonds_ppc |>
+  filter(`price per carat` > mean(`price per carat`) + 2 * sd(`price per carat`)) |>
+  ggplot(aes(x=`price per carat`, colour = cut)) +
+  geom_density(bw="sj", linewidth = 1, alpha = 0.75) +
+  geom_rug(alpha = 0.5)
+```
+
+```{r}
+diamonds_with_stats <- 
+  diamonds_ppc |>
+    mutate(mean = mean(`price per carat`), 
+           sd = sd(`price per carat`), 
+           large_ppc = mean + 2*sd)
+```
+
+## Conditional analysis. 
+
+```{r}
+diamonds_with_cond_stats <- 
+  diamonds_ppc |>
+    mutate(mean = mean(`price per carat`), 
+           sd = sd(`price per carat`), 
+           large_ppc = mean + 2*sd,
+           .by = cut)
+```
+
+```{r}
+diamonds_with_cond_stats |>
+  filter(`price per carat` > large_ppc) |>
+  ggplot(aes(x=`price per carat`, colour = cut)) +
+  geom_density(bw="sj", linewidth = 1, alpha = 0.75) +
+  geom_rug(alpha = 0.5)
+```
