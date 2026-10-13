@@ -664,3 +664,45 @@ diamonds |>
   select(!starts_with("c"))
 ```
 
+# Sorting
+
+## arrange
+
+The `arrange` verb is used to sort a data frame according to various properties.
+
+```{r}
+#| echo: true
+diamonds |>
+  summarise(median(carat), .by=clarity) |>
+  arrange(clarity) # increasing order of clarity
+```
+
+## Using calculated column
+
+```{r}
+#| echo: true
+diamonds |>
+  summarise(median(carat), .by=clarity) |>
+  arrange(`median(carat)`)
+```
+
+## Decreasing order
+
+```{r}
+#| echo: true
+diamonds |>
+  summarise(n = n(), .by = color) |>
+  arrange(desc(n))
+```
+
+## Lexicographic order {.smaller}
+
+```{r}
+#| echo: true
+diamonds |>
+  summarise(n = n(), .by = c(cut, color)) |>
+  arrange(cut, desc(color)) |>
+  slice(1:8)
+```
+
+
