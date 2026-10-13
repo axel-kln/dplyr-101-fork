@@ -561,7 +561,84 @@ diamonds |>
   slice_sample(by=cut, weight_by = price/carat)
 ```
 
+# Select
+
+## Select principle
+
+The goal of the function is to select some of the variables in a data frame, based on 
+the properties (position, name and content).
+
+The basic use leverages names:
+
+```{r}
+#| echo: true
+diamonds |>
+  slice_tail(n=5) |>
+  select(price, carat, cut)
+```
+
+## Select with position
+
+Select can use columns indexes in a similar way to `slice`.
+
+```{r}
+#| echo: true
+diamonds |>
+  slice_max(carat, by = color) |>
+  select(1:4, 7)
+```
+
+## Select by column name properties
+
+Select can operate by looking at conditions on the names.
+
+```{r}
+#| echo: true
+diamonds |>
+  slice_max(carat, n = 5) |>
+  select(starts_with("c"))
+```
+
 ```{r}
 #| message: false
 credit_default <- vroom(here("data", "default-of-credit-card-clients.csv"))
+```
+
+## Select by column name properties
+
+```{r}
+#| echo: true
+credit_default |>
+  slice_max(LIMIT_BAL) |>
+  select(starts_with("PAY_")) |>
+  select(1:6)
+```
+## Select by column name properties
+
+```{r}
+#| echo: true
+credit_default |>
+  slice_max(LIMIT_BAL) |>
+  select(matches("PAY_[0-9]"))
+```
+## Select by column content properties 
+
+Select can test the content of a column using a specified function. 
+
+```{r}
+#| echo: true
+diamonds |>
+  slice_sample(n=5) |>
+  select(where(is.numeric))
+```
+
+## Select by column content properties 
+
+Select can test the content of a column using a specified function. 
+
+```{r}
+#| echo: true
+diamonds |>
+  slice_sample(n=5) |>
+  select(where(is.factor))
 ```
