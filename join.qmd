@@ -151,3 +151,28 @@ client_account |>
   mutate(bank_at_home = district_id_client == district_id_account) |>
   summarise(n(), .by=bank_at_home)
 ```
+```{r}
+client_moved <- client_account |>
+  filter(district_id_client != district_id_account)
+```
+
+```{r}
+d_urban <- district |>
+  select(district_id, A10) |>
+  rename(urban_fraction = A10)
+client_district <- inner_join(client_moved, d_urban, join_by(district_id_client == district_id)) |>
+  rename(uf_client = urban_fraction) |>
+  inner_join(d_urban, join_by(district_id_account == district_id)) |>
+  rename(uf_account = urban_fraction)
+```
+
+```{r}
+client_district |>
+  filter(type=="OWNER") |>
+  select(client_id, uf_client, uf_account) |>
+  pivot_longer(!client_id, names_to = "Location", values_to = "Urban Fraction") |>
+  ggplot(aes(x=`Urban Fraction`, fill = Location)) +
+    geom_density(alpha=0.2) +
+    geom_rug()
+```
+
