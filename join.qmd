@@ -175,4 +175,24 @@ client_district |>
     geom_density(alpha=0.2) +
     geom_rug()
 ```
+## Anti and Semi join
+```{r}
+A
+B
+```
 
+```{r}
+anti_join(A, B, by = join_by(b_id))
+```
+
+```{r}
+anti_join(B, A, by = join_by(b_id))
+```
+
+```{r}
+semi_join(A, B, by = join_by(b_id))
+```
+
+```{r}
+semi_join(B, A, by = join_by(b_id))
+```
