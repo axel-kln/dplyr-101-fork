@@ -2,6 +2,7 @@
 title: "Working with multiple tables"
 author: "Fabrice Rossi"
 format: html
+df-print: kable
 ---
 
 ```{r}
@@ -11,6 +12,7 @@ library(here)
 library(dplyr)
 library(vroom)
 library(ggplot2)
+library(tidyr)
 ```
 
 ```{r}
@@ -47,4 +49,28 @@ disp <- vroom(here("Financial", "disp.csv"),
 account |>
   ggplot(aes(x = date)) +
   geom_histogram(binwidth = 30)
+```
+
+## Joining two tables
+
+### Inner join
+
+```{r}
+dc <- inner_join(disp, client, by = join_by(client_id))
+```
+
+
+```{r}
+dc |>
+  ggplot(aes(x = gender, fill = type)) +
+  geom_bar(position = "fill")
+```
+
+
+```{r}
+dc |>
+  summarise(n=n(), .by=c(gender, type)) |>
+  mutate(freq = n/sum(n), .by = gender) |>
+  select(!n) |>
+  pivot_wider(names_from = type, values_from = freq)
 ```
