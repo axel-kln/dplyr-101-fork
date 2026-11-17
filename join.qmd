@@ -23,6 +23,15 @@ account <- vroom(here("Financial", "account.csv"),
     .delim = ","
   )
 )
+client <- vroom("Financial/client.csv",
+  col_types = cols(
+    client_id = col_integer(),
+    gender = col_factor(levels = c("F", "M")),
+    birth_date = col_date(format = ""),
+    district_id = col_integer(),
+    .delim = ","
+  )
+)
 ```
 
 ```{r}
