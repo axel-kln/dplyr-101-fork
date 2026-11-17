@@ -4,3 +4,30 @@ author: "Fabrice Rossi"
 format: html
 ---
 
+```{r}
+#| message: false
+here::i_am("dplyr-101.Rproj")
+library(here)
+library(dplyr)
+library(vroom)
+library(ggplot2)
+```
+
+```{r}
+account <- vroom(here("Financial", "account.csv"),
+  col_types = cols(
+    account_id = col_integer(),
+    district_id = col_integer(),
+    frequency = col_character(),
+    date = col_date(format = ""),
+    .delim = ","
+  )
+)
+```
+
+```{r}
+account |>
+  ggplot(aes(x=date)) +
+    geom_histogram(binwidth = 30)
+```
+
