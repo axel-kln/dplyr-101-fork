@@ -36,7 +36,6 @@ client <- vroom("Financial/client.csv",
 
 ```{r}
 account |>
-  ggplot(aes(x=date)) +
-    geom_histogram(binwidth = 30)
+  ggplot(aes(x = date)) +
+  geom_histogram(binwidth = 30)
 ```
-
