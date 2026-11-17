@@ -43,6 +43,26 @@ disp <- vroom(here("Financial", "disp.csv"),
     .delim = ","
   )
 )
+district <- vroom(here("Financial","district.csv"),
+                  col_types = cols(
+  district_id = col_integer(),
+  A2 = col_character(),
+  A3 = col_character(),
+  A4 = col_double(),
+  A5 = col_double(),
+  A6 = col_double(),
+  A7 = col_double(),
+  A8 = col_double(),
+  A9 = col_double(),
+  A10 = col_double(),
+  A11 = col_double(),
+  A12 = col_double(),
+  A13 = col_double(),
+  A14 = col_double(),
+  A15 = col_double(),
+  A16 = col_double(),
+  .delim = ","
+))
 ```
 
 ```{r}
