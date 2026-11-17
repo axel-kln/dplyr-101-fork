@@ -78,7 +78,8 @@ dc |>
 set.seed(0)
 B <- data.frame(
   b_id = 1:6,
-  Y = sample(6)
+  Y = sample(1:3, size = 6, replace =TRUE),
+  Z = sample(letters, size = 6)
 )
 A <- data.frame(
   a_id = 1:4,
@@ -94,4 +95,13 @@ inner_join(A, B, by = join_by(b_id))
 
 ```{r}
 inner_join(B, A, by = join_by(b_id))
+```
+
+
+```{r}
+inner_join(A, B, by = join_by(b_id == Y))
+```
+
+```{r}
+inner_join(A, B, by = join_by(b_id < Y))
 ```
