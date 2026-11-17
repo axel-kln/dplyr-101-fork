@@ -105,3 +105,16 @@ inner_join(A, B, by = join_by(b_id == Y))
 ```{r}
 inner_join(A, B, by = join_by(b_id < Y))
 ```
+### Outer joins
+
+```{r}
+left_join(A, B, by = join_by(b_id == Y))
+```
+
+```{r}
+right_join(A, B, by = join_by(b_id == Y))
+```
+
+```{r}
+full_join(A, B, by = join_by(b_id == Y))
+```
