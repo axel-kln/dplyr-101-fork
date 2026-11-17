@@ -32,6 +32,15 @@ client <- vroom("Financial/client.csv",
     .delim = ","
   )
 )
+disp <- vroom(here("Financial", "disp.csv"),
+  col_types = cols(
+    disp_id = col_integer(),
+    client_id = col_integer(),
+    account_id = col_integer(),
+    type = col_factor(levels = c("OWNER", "DISPONENT")),
+    .delim = ","
+  )
+)
 ```
 
 ```{r}
