@@ -138,3 +138,16 @@ right_join(A, B, by = join_by(b_id == Y))
 ```{r}
 full_join(A, B, by = join_by(b_id == Y))
 ```
+
+## More than two tables
+
+```{r}
+client_account <- inner_join(client, disp, by = join_by(client_id)) |> 
+  inner_join(account, by = join_by(account_id), suffix = c("_client", "_account"))
+```
+
+```{r}
+client_account |>
+  mutate(bank_at_home = district_id_client == district_id_account) |>
+  summarise(n(), .by=bank_at_home)
+```
